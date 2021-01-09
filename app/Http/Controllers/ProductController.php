@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Traits\UploadTrait;
 use Illuminate\Http\Request;
+use PDF;
 
 class ProductController extends Controller
 {
@@ -116,7 +117,26 @@ class ProductController extends Controller
             'cart' => 'required',
         ]);
 
+        if (request()->routeIs('savePrint')) {
+            return redirect()->route('print')->withCookie(cookie()->forever('cart', $validated['cart'], 450000));
+        }
+
         return redirect()->route('transactions')->withCookie(cookie()->forever('cart', $validated['cart'], 450000));
+    }
+
+    public function print()
+    {
+        return "Sorry, currently this feature is unavailable :(";
+        // $cart = \Cookie::get('cart') !== null ? \Cookie::get('cart') : [];
+        // $total = 0;
+        // if (! empty($cart)) {
+        //     foreach (json_decode($cart) as $value) {
+        //         $total += $value[4];
+        //     }
+        // }
+
+        // $pdf = PDF::loadview('pdf/cart', compact('cart', 'total'));
+    	// return $pdf->download('print-cart-pdf');
     }
 
     private function clearRupiah($price)

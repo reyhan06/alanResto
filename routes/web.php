@@ -20,5 +20,7 @@ Route::get('/', function () {
 
 Route::get('/transactions', [ProductController::class, 'index'])->name('transactions');
 Route::post('/save', [ProductController::class, 'saveCart'])->name('transactions.save');
+Route::post('/save-and-print', [ProductController::class, 'saveCart'])->name('savePrint');
+Route::get('/print', [ProductController::class, 'print'])->name('print');
 
 Route::resource('products', ProductController::class);
